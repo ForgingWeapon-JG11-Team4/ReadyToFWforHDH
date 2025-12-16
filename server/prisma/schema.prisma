@@ -36,6 +36,9 @@ model Movie {
 model Comment {
   id        Int       @id @default(autoincrement())
   content   String
+  rating    Float?    // 별점 (0.0 ~ 5.0), 대댓글은 null
+  likes     Int       @default(0)  // 좋아요 수
+  dislikes  Int       @default(0)  // 싫어요 수
   userId    Int
   movieId   Int
   parentId  Int?      // For nested replies (null = root comment)

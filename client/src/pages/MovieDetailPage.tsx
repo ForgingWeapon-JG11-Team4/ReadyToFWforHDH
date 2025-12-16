@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import CommentSection from '../components/CommentSection';
 import './MovieDetailPage.css';
 
 interface MovieDetail {
@@ -130,8 +131,14 @@ const MovieDetailPage = () => {
                     </div>
                 </section>
             )}
+
+            {/* Comments Section */}
+            <section className="detail-section">
+                <CommentSection movieId={movie.id} />
+            </section>
         </div>
     );
 };
 
 export default MovieDetailPage;
+
