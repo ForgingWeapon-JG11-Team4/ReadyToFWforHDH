@@ -11,8 +11,13 @@ async function bootstrap() {
   // Enable CORS to allow requests from Frontend (localhost:5173)
   app.enableCors();
 
-  // app.listen: 웹 서버를 구동하고 환경 변수(PORT) 또는 기본값 3001번 포트에서 요청을 기다립니다.
-  await app.listen(process.env.PORT ?? 3001);
+  // Graceful Shutdown Hook: 
+  // Ctrl+C, SIGINT, SIGTERM 시그널을 받았을 때 서버를 안전하게 종료하고 포트를 반환하도록 합니다.
+  // 이 설정이 없으면 윈도우/터미널 환경에 따라 프로세스가 좀비처럼 남아 포트 충돌(EADDRINUSE)을 일으킬 수 있습니다.
+  app.enableShutdownHooks();
+
+  // app.listen: 웹 서버를 구동하고 환경 변수(PORT) 또는 기본값 3000번 포트에서 요청을 기다립니다.
+  await app.listen(process.env.PORT ?? 3000);
 }
 
 bootstrap();

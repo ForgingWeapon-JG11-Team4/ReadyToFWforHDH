@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Param } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 
 @Controller('movies')
@@ -12,5 +12,11 @@ export class MoviesController {
         // API just proxies the page request.
         const pageNum = parseInt(page) || 1;
         return this.moviesService.getTopRated(pageNum);
+    }
+
+    @Get(':id')
+    async getMovieDetail(@Param('id') id: string) {
+        const movieId = parseInt(id);
+        return this.moviesService.getMovieDetail(movieId);
     }
 }

@@ -19,7 +19,7 @@ export default function HomePage() {
         const fetchMovies = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3001/movies/top-rated?page=${page}`);
+                const response = await axios.get(`http://localhost:3000/movies/top-rated?page=${page}`);
                 // TMDB returns results in 'results' array
                 setMovies(response.data.results);
             } catch (error) {
