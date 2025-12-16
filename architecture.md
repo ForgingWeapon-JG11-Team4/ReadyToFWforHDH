@@ -1,6 +1,10 @@
 # 프로젝트 작업 계획 (Project Architecture & Plan)
 
-요청하신 대로 **NestJS(서버)**와 **React(프론트엔드)**를 기반으로 한 영화 검색 사이트 구축 계획입니다.
+ **NestJS(서버)**와 **React(프론트엔드)**를 기반으로 한 영화 검색 사이트 구축 계획입니다.
+
+## 실행 방법
+1. 서버 실행: `cd server` 후 `npm run start`.
+2. 클라이언트 실행: `cd client` 후 `npm run dev`.
 
 ## 1. 프로젝트 초기화 (Project Initialization)
 1. **서버 (Backend)**: NestJS CLI를 사용하여 `server` 디렉토리에 프로젝트 생성.
@@ -73,4 +77,19 @@
     2.  **`src/main.tsx`**: React 애플리케이션의 진입점입니다. `index.html`의 root 요소에 React 앱을 마운트합니다.
     3.  **`src/App.tsx`**: 메인 컴포넌트입니다. 현재는 초기화 메시지만 출력하도록 단순화되었습니다.
 - **파일 정리**: 사용하지 않는 기본 로고(`react.svg`)와 기본 스타일(`App.css`)을 초기화하여 백지상태에서 시작할 수 있도록 준비했습니다.
+
+
+### 2. 백엔드 개발 (Backend Development)
+- **작업 내용**: 데이터베이스 스키마 정의(`Prisma`) 및 영화 데이터 API(`MoviesModule`) 구현.
+- **주요 파일 설명**:
+    1.  **`schema.prisma`**: 사용자(User), 영화(Movie), 댓글(Comment) 등의 데이터 모델을 정의했습니다.
+    2.  **`movies.service.ts`**: Axios를 사용하여 TMDB 외부 API를 호출합니다. '최근 개봉 영화'를 가져오기 위해 `/movie/now_playing` 엔드포인트를 사용했습니다.
+    3.  **`movies.controller.ts`**: `/movies/top-rated` 주소로 요청이 오면 서비스에게 영화 목록을 달라고 시킵니다.
+
+### 3. 프론트엔드 - 메인 화면 (Frontend - Main)
+- **작업 내용**: 서버의 영화 API를 호출하여 화면에 그리드 형태로 보여주는 메인 페이지를 구현했습니다.
+- **주요 파일 설명**:
+    1.  **`Header.tsx`**: 사이트 상단의 로고와 네비게이션을 담당하는 컴포넌트입니다.
+    2.  **`MovieCard.tsx`**: 영화 하나하나를 포스터와 함께 예쁜 카드로 보여주는 컴포넌트입니다. 포스터가 없으면 대체 이미지를 보여줍니다.
+    3.  **`HomePage.tsx`**: 메인 페이지 핵심 로직이 들어있습니다. `axios`를 사용해 백엔드(`localhost:3000/movies/top-rated`)에서 데이터를 가져오고, '이전/다음' 버튼으로 페이지를 넘길 수 있게 페이징 기능을 구현했습니다.
 

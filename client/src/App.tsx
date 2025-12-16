@@ -1,12 +1,23 @@
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+import './App.css';
 
 function App() {
   return (
-    <>
-      <h1>Movie Search App</h1>
-      <p>Client Initialization Complete</p>
-    </>
-  )
+    <Router>
+      <div className="app-container">
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            {/* Detail Route will come next */}
+            <Route path="/movie/:id" element={<div>Movie Detail Page (Coming Soon)</div>} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
