@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  username  String
+  password  String
+  comments  Comment[]
+  ratings   Rating[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Movie {
+  id        Int       @id // TMDB ID (Not autoincrement)
+  title     String
+  posterPath String?
+  cachedAt  DateTime  @default(now())
+
+  comments  Comment[]
+  ratings   Rating[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  userId    Int
+  movieId   Int
+  parentId  Int?      // For nested replies (null = root comment)
+  
+  user      User      @relation(fields: [userId], references: [id])
+  movie     Movie     @relation(fields: [movieId], references: [id])
+  parent    Comment?  @relation("CommentToComment", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentToComment")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Rating {
+  id        Int       @id @default(autoincrement())
+  score     Int       // 1 ~ 5
+  userId    Int
+  movieId   Int
+
+  user      User      @relation(fields: [userId], references: [id])
+  movie     Movie     @relation(fields: [movieId], references: [id])
+  
+  createdAt DateTime  @default(now())
+  
+  @@unique([userId, movieId]) // One rating per movie per user
+}

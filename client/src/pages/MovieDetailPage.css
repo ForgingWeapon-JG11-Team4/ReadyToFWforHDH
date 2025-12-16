@@ -1,0 +1,149 @@
+.movie-detail-page {
+    color: white;
+    padding-bottom: 4rem;
+}
+
+.detail-hero {
+    position: relative;
+    padding: 4rem 2rem;
+    background-size: cover;
+    background-position: center;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-content {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    width: 100%;
+    z-index: 1;
+}
+
+.detail-poster img {
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detail-title {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.detail-subtitle {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.detail-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.rating {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.detail-overview {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.detail-section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+}
+
+.detail-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #e50914;
+    padding-left: 1rem;
+}
+
+/* Cast Grid */
+.cast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.cast-card {
+    text-align: center;
+}
+
+.cast-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.cast-card img:hover {
+    transform: scale(1.05);
+}
+
+.actor-name {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.character-name {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin: 0;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-img {
+    width: 100%;
+    border-radius: 8px;
+    transition: opacity 0.2s;
+}
+
+.gallery-img:hover {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .detail-poster img {
+        width: 200px;
+    }
+
+    .detail-title {
+        font-size: 2rem;
+    }
+}

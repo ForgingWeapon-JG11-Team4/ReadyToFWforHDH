@@ -1,0 +1,87 @@
+.home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.movie-grid {
+    display: grid;
+    /* Mobile: 2 columns */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Tablet: 3 columns */
+@media (min-width: 600px) {
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Desktop: Fixed 5 columns as requested */
+@media (min-width: 1024px) {
+    .movie-grid {
+        /* User requested fixed 5 columns */
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Media Query for Desktop Container */
+/* Media Query for Desktop Container */
+@media (min-width: 1024px) {
+    .home-page {
+        /* User requested ~75% width centered */
+        width: 75%;
+        max-width: 1600px;
+        margin: 0 auto;
+        /* This will now work because body flex is removed */
+        padding: 2rem 0;
+    }
+}
+
+
+.loading {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 3rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.pagination button {
+    padding: 0.5rem 1rem;
+    background: #e50914;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pagination button:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
+.page-number {
+    font-size: 1.1rem;
+    font-weight: bold;
+}

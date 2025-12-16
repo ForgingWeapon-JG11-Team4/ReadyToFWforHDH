@@ -1,0 +1,10 @@
+.app-container {
+    min-height: 100vh;
+    background-color: #141414;
+    color: #fff;
+}
+
+main {
+    min-height: calc(100vh - 64px);
+    /* Header height approx */
+}
