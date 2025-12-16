@@ -1,5 +1,25 @@
-# Object file
-*.o
+# Node modules
+node_modules
+npm-debug.log
+yarn-error.log
 
-# Ada Library Information
-*.ali
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
