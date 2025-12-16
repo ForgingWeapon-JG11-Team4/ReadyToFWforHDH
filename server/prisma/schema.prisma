@@ -7,7 +7,8 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+// prisma7 에선 url 설정 금지됨. prisma.config.ts 로 db 접속 url을 옮겨야 한다
+  url      = env("DATABASE_URL") 
 }
 
 model User {

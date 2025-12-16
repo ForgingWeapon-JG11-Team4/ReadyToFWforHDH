@@ -1,0 +1,142 @@
+.signup-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #141414;
+}
+
+.signup-container {
+    background-color: #1a1a1a;
+    padding: 3rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.signup-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #e50914;
+}
+
+.form-group input::placeholder {
+    color: #888;
+}
+
+/* Email check row */
+.email-check-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.email-check-row input {
+    flex: 1;
+}
+
+.btn-check {
+    padding: 0.8rem 1rem;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.btn-check:hover {
+    background-color: #666;
+}
+
+.check-ok {
+    color: #4caf50;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.check-fail {
+    color: #e50914;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.error-message {
+    color: #e50914;
+    background-color: rgba(229, 9, 20, 0.1);
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.btn-signup-submit {
+    width: 100%;
+    padding: 1rem;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-signup-submit:hover {
+    background-color: #f40612;
+}
+
+.btn-signup-submit:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #888;
+}
+
+.login-link a {
+    color: #e50914;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
