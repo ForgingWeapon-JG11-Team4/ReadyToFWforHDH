@@ -93,8 +93,8 @@
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* User name display */
-.user-name {
+/* User nickname display */
+.user-nickname {
     color: #ccc;
     font-weight: 500;
     padding: 0.5rem;

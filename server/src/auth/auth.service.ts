@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 /**
  * AuthService: 인증 관련 비즈니스 로직
  * - 회원가입: 비밀번호 해싱 후 저장
- * - 로그인: 비밀번호 검증 후 JWT 발급
+ * - 로그인: 아이디(username) + 비밀번호 검증 후 JWT 발급
  * - 아이디 중복 체크
  */
 @Injectable()
@@ -18,12 +18,16 @@ export class AuthService {
 
     /**
      * 회원가입
+     * @param username 로그인용 아이디
+     * @param password 비밀번호
+     * @param nickname 댓글에 노출될 닉네임
+     * @param email 이메일 (선택)
      */
-    async register(username: string, email: string, password: string) {
-        // 이메일 중복 체크
-        const existingUser = await this.prisma.user.findUnique({ where: { email } });
+    async register(username: string, password: string, nickname: string, email?: string) {
+        // 아이디 중복 체크
+        const existingUser = await this.prisma.user.findUnique({ where: { username } });
         if (existingUser) {
-            throw new ConflictException('이미 사용 중인 이메일입니다.');
+            throw new ConflictException('이미 사용 중인 아이디입니다.');
         }
 
         // 비밀번호 해싱
@@ -33,8 +37,9 @@ export class AuthService {
         const user = await this.prisma.user.create({
             data: {
                 username,
-                email,
                 password: hashedPassword,
+                nickname,
+                email: email || null,
             },
         });
 
@@ -44,40 +49,40 @@ export class AuthService {
     }
 
     /**
-     * 로그인: 이메일 + 비밀번호 검증 후 JWT 발급
+     * 로그인: 아이디(username) + 비밀번호 검증 후 JWT 발급
      */
-    async login(email: string, password: string) {
+    async login(username: string, password: string) {
         // 사용자 찾기
-        const user = await this.prisma.user.findUnique({ where: { email } });
+        const user = await this.prisma.user.findUnique({ where: { username } });
         if (!user) {
-            throw new UnauthorizedException('이메일 또는 비밀번호가 올바르지 않습니다.');
+            throw new UnauthorizedException('아이디 또는 비밀번호가 올바르지 않습니다.');
         }
 
         // 비밀번호 검증
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            throw new UnauthorizedException('이메일 또는 비밀번호가 올바르지 않습니다.');
+            throw new UnauthorizedException('아이디 또는 비밀번호가 올바르지 않습니다.');
         }
 
-        // JWT 토큰 생성
-        const payload = { sub: user.id, email: user.email, username: user.username };
+        // JWT 토큰 생성 (nickname 포함)
+        const payload = { sub: user.id, username: user.username, nickname: user.nickname };
         const accessToken = this.jwtService.sign(payload);
 
         return {
             accessToken,
             user: {
                 id: user.id,
-                email: user.email,
                 username: user.username,
+                nickname: user.nickname,
             },
         };
     }
 
     /**
-     * 이메일 중복 체크
+     * 아이디 중복 체크
      */
-    async checkEmail(email: string): Promise<boolean> {
-        const user = await this.prisma.user.findUnique({ where: { email } });
+    async checkUsername(username: string): Promise<boolean> {
+        const user = await this.prisma.user.findUnique({ where: { username } });
         return !!user; // true = 이미 존재함
     }
 

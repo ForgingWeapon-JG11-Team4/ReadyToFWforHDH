@@ -20,9 +20,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     /**
      * JWT 검증 성공 시 호출됨
-     * payload: { sub: userId, email, username }
+     * payload: { sub: userId, username, nickname }
      */
-    async validate(payload: { sub: number; email: string; username: string }) {
-        return { userId: payload.sub, email: payload.email, username: payload.username };
+    async validate(payload: { sub: number; username: string; nickname: string }) {
+        return { userId: payload.sub, username: payload.username, nickname: payload.nickname };
     }
 }

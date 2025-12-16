@@ -5,11 +5,11 @@ import './LoginPage.css';
 
 /**
  * LoginPage: 로그인 페이지
- * - 이메일/비밀번호 입력
+ * - 아이디(username)/비밀번호 입력
  * - 로그인 성공 시 홈으로 이동
  */
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export default function LoginPage() {
         setLoading(true);
 
         try {
-            await login(email, password);
+            await login(username, password);
             navigate('/'); // 로그인 성공 시 홈으로
         } catch (err: any) {
             setError(err.response?.data?.message || '로그인에 실패했습니다.');
@@ -39,13 +39,13 @@ export default function LoginPage() {
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">이메일</label>
+                        <label htmlFor="username">아이디</label>
                         <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="example@email.com"
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="아이디 입력"
                             required
                         />
                     </div>

@@ -7,7 +7,7 @@ import './Header.css';
  * Header 컴포넌트
  * - 모든 페이지에서 공통으로 표시되는 헤더바
  * - 로고(좌측), 검색창(중앙), Home/Login/Logout(우측)
- * - AuthContext를 사용하여 로그인 상태 반영
+ * - 로그인 시 "닉네임 님" 표시
  */
 export default function Header() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +55,7 @@ export default function Header() {
                     </Link>
                     {isLoggedIn ? (
                         <>
-                            <span className="user-name">👤 {user?.username}</span>
+                            <span className="user-nickname">👤 {user?.nickname} 님</span>
                             <button className="btn-logout" onClick={handleLogout}>
                                 Logout
                             </button>

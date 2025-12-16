@@ -54,13 +54,13 @@
     color: #888;
 }
 
-/* Email check row */
-.email-check-row {
+/* Username check row */
+.username-check-row {
     display: flex;
     gap: 0.5rem;
 }
 
-.email-check-row input {
+.username-check-row input {
     flex: 1;
 }
 

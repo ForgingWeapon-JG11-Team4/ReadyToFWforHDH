@@ -3,24 +3,24 @@ import axios from 'axios';
 
 /**
  * AuthContext: 전역 인증 상태 관리
- * - user: 현재 로그인한 사용자 정보
- * - login: 로그인 함수
+ * - user: 현재 로그인한 사용자 정보 (id, username, nickname)
+ * - login: 로그인 함수 (username + password)
  * - logout: 로그아웃 함수
  * - isLoggedIn: 로그인 여부
  */
 
 interface User {
     id: number;
-    email: string;
     username: string;
+    nickname: string;
 }
 
 interface AuthContextType {
     user: User | null;
     isLoggedIn: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (username: string, password: string) => Promise<void>;
     logout: () => void;
-    register: (username: string, email: string, password: string) => Promise<void>;
+    register: (username: string, password: string, nickname: string, email?: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -39,8 +39,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    const login = async (email: string, password: string) => {
-        const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+    const login = async (username: string, password: string) => {
+        const response = await axios.post(`${API_URL}/auth/login`, { username, password });
         const { accessToken, user: userData } = response.data;
 
         // 토큰 및 사용자 정보 저장
@@ -55,8 +55,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
-    const register = async (username: string, email: string, password: string) => {
-        await axios.post(`${API_URL}/auth/register`, { username, email, password });
+    const register = async (username: string, password: string, nickname: string, email?: string) => {
+        await axios.post(`${API_URL}/auth/register`, { username, password, nickname, email });
     };
 
     return (
