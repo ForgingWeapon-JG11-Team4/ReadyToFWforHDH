@@ -138,3 +138,28 @@
 - **Prisma 스키마 변경**:
     - `Comment.rating`: 별점 (`Float?`, 대댓글은 null).
     - `Comment.likes`, `Comment.dislikes`: 좋아요/싫어요 카운트 (`Int @default(0)`).
+
+### 7. 검색 기능 (Search Feature)
+- **작업 내용**: 텍스트 검색 + 카테고리(장르) 필터 기능 구현.
+- **검색 유형**:
+    - **전체 검색 (Multi)**: 영화 제목, 배우, 제작사 통합 검색.
+    - **영화 제목 검색 (Movie)**: TMDB `/search/movie` API.
+    - **배우 검색 (Person)**: TMDB `/search/person` API.
+    - **제작사 검색 (Company)**: TMDB `/search/company` API.
+    - **장르별 탐색 (Discover)**: TMDB `/discover/movie` API.
+- **LLM 연동 대비**: `structuredSearch()` 메서드로 타입/쿼리/장르를 구조화하여 처리. 추후 LLM이 자연어를 파싱해 이 메서드 호출 가능.
+- **백엔드 파일**:
+    1.  **`movies.service.ts`**: 검색 메서드 추가 (searchMulti, searchMovies, searchPerson, searchCompany, getGenres, discoverByGenre, structuredSearch).
+    2.  **`movies.controller.ts`**: API 엔드포인트:
+        - `GET /movies/search?q=검색어&type=multi&page=1` - 통합 검색.
+        - `GET /movies/genres` - 장르 목록 조회.
+        - `GET /movies/discover?genres=28,12&page=1` - 장르별 영화 탐색.
+- **프론트엔드 파일**:
+    1.  **`SearchPage.tsx`**: 검색 페이지.
+        - 검색 타입 라디오 버튼 (전체/영화/배우/제작사).
+        - 텍스트 검색 입력.
+        - 장르 태그 버튼 (다중 선택 가능).
+        - 검색 결과 그리드 + 페이징.
+    2.  **`SearchPage.css`**: 스타일링.
+    3.  **`App.tsx`**: `/search` 라우트 추가.
+- **헤더 연동**: 헤더 검색창에서 검색 시 `/search?q=검색어`로 이동.
