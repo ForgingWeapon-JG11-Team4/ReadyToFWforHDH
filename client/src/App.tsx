@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import MovieDetailPage from './pages/MovieDetailPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import SearchPage from './pages/SearchPage';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Route path="/movie/:id" element={<MovieDetailPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/search" element={<SearchPage />} />
             </Routes>
           </main>
         </div>
@@ -28,3 +30,4 @@ function App() {
 }
 
 export default App;
+
