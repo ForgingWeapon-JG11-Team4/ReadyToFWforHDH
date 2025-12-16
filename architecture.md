@@ -93,3 +93,73 @@
     2.  **`MovieCard.tsx`**: 영화 하나하나를 포스터와 함께 예쁜 카드로 보여주는 컴포넌트입니다. 포스터가 없으면 대체 이미지를 보여줍니다.
     3.  **`HomePage.tsx`**: 메인 페이지 핵심 로직이 들어있습니다. `axios`를 사용해 백엔드(`localhost:3000/movies/top-rated`)에서 데이터를 가져오고, '이전/다음' 버튼으로 페이지를 넘길 수 있게 페이징 기능을 구현했습니다.
 
+### 4. 헤더 업데이트 (Header Update)
+- **작업 내용**: 헤더바를 개선하여 검색창, Home, Login/Logout 버튼을 추가했습니다.
+- **레이아웃**: `[로고] --- [검색창(중앙)] --- [Home | Login]`
+- **주요 변경사항**:
+    1.  **검색창**: 텍스트 입력 + 🔍 버튼을 헤더 중앙에 배치.
+    2.  **Home/Login**: 우측 정렬.
+    3.  **로그인 상태 반영**: `AuthContext`를 통해 로그인 시 "👤 닉네임 님" + Logout 버튼 표시.
+
+### 5. 로그인/회원가입 기능 (Login & Signup)
+- **작업 내용**: JWT 기반 인증 시스템 구현 (백엔드 + 프론트엔드).
+- **로그인 방식**: 아이디(username) + 비밀번호 (이메일은 선택적 정보로 변경).
+- **백엔드 파일**:
+    1.  **`auth.service.ts`**: 회원가입(비밀번호 bcrypt 해싱), 로그인(JWT 발급), 아이디 중복 체크 로직.
+    2.  **`auth.controller.ts`**: `/auth/register`, `/auth/login`, `/auth/check-username` 엔드포인트.
+    3.  **`auth.module.ts`**: JWT 모듈 설정 (7일 유효기간).
+    4.  **`jwt.strategy.ts`**: Passport JWT 토큰 검증 전략.
+- **프론트엔드 파일**:
+    1.  **`AuthContext.tsx`**: 전역 로그인 상태 관리 (user, login, logout, register).
+    2.  **`LoginPage.tsx`**: 아이디/비밀번호 입력 폼.
+    3.  **`SignupPage.tsx`**: 아이디(중복체크), 비밀번호(확인), 닉네임, 이메일(선택) 입력 폼.
+- **Prisma 스키마 변경**:
+    - `User.username`: `@unique` (로그인용 PK 역할).
+    - `User.nickname`: 댓글에 노출되는 닉네임.
+    - `User.email`: 선택적 정보 (`String?`).
+
+### 6. 댓글/대댓글 기능 (Comments & Replies)
+- **작업 내용**: 영화 상세 페이지에 댓글/대댓글 CRUD 기능 구현.
+- **댓글 정보**: 영화ID, 작성자(닉네임), 작성시간, 별점(0~5), 좋아요/싫어요.
+- **대댓글 정보**: 부모댓글ID, 작성자, 작성시간, 좋아요/싫어요.
+- **백엔드 파일**:
+    1.  **`comments.service.ts`**: 댓글 목록 조회, 댓글/대댓글 작성, 좋아요/싫어요, 삭제 로직.
+    2.  **`comments.controller.ts`**: API 엔드포인트:
+        - `GET /comments/:movieId` - 영화별 댓글 목록 (대댓글 포함).
+        - `POST /comments` - 댓글 작성 (로그인 필요, JWT Guard).
+        - `POST /comments/:id/reply` - 대댓글 작성.
+        - `POST /comments/:id/like`, `/dislike` - 좋아요/싫어요.
+        - `DELETE /comments/:id` - 삭제 (본인만).
+    3.  **`comments.module.ts`**: 모듈 정의.
+- **프론트엔드 파일**:
+    1.  **`CommentSection.tsx`**: 댓글 목록 + 작성 폼 (로그인 시 writable, 비로그인 시 readonly).
+    2.  **`CommentCard.tsx`**: 개별 댓글 카드 (별점, 좋아요/싫어요 버튼, 대댓글 토글).
+    3.  **`MovieDetailPage.tsx`**: `<CommentSection movieId={id} />` 추가.
+- **Prisma 스키마 변경**:
+    - `Comment.rating`: 별점 (`Float?`, 대댓글은 null).
+    - `Comment.likes`, `Comment.dislikes`: 좋아요/싫어요 카운트 (`Int @default(0)`).
+
+### 7. 검색 기능 (Search Feature)
+- **작업 내용**: 텍스트 검색 + 카테고리(장르) 필터 기능 구현.
+- **검색 유형**:
+    - **전체 검색 (Multi)**: 영화 제목, 배우, 제작사 통합 검색.
+    - **영화 제목 검색 (Movie)**: TMDB `/search/movie` API.
+    - **배우 검색 (Person)**: TMDB `/search/person` API.
+    - **제작사 검색 (Company)**: TMDB `/search/company` API.
+    - **장르별 탐색 (Discover)**: TMDB `/discover/movie` API.
+- **LLM 연동 대비**: `structuredSearch()` 메서드로 타입/쿼리/장르를 구조화하여 처리. 추후 LLM이 자연어를 파싱해 이 메서드 호출 가능.
+- **백엔드 파일**:
+    1.  **`movies.service.ts`**: 검색 메서드 추가 (searchMulti, searchMovies, searchPerson, searchCompany, getGenres, discoverByGenre, structuredSearch).
+    2.  **`movies.controller.ts`**: API 엔드포인트:
+        - `GET /movies/search?q=검색어&type=multi&page=1` - 통합 검색.
+        - `GET /movies/genres` - 장르 목록 조회.
+        - `GET /movies/discover?genres=28,12&page=1` - 장르별 영화 탐색.
+- **프론트엔드 파일**:
+    1.  **`SearchPage.tsx`**: 검색 페이지.
+        - 검색 타입 라디오 버튼 (전체/영화/배우/제작사).
+        - 텍스트 검색 입력.
+        - 장르 태그 버튼 (다중 선택 가능).
+        - 검색 결과 그리드 + 페이징.
+    2.  **`SearchPage.css`**: 스타일링.
+    3.  **`App.tsx`**: `/search` 라우트 추가.
+- **헤더 연동**: 헤더 검색창에서 검색 시 `/search?q=검색어`로 이동.

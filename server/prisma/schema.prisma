@@ -7,14 +7,16 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+// prisma7 에선 url 설정 금지됨. prisma.config.ts 로 db 접속 url을 옮겨야 한다
+  url      = env("DATABASE_URL") 
 }
 
 model User {
   id        Int       @id @default(autoincrement())
-  email     String    @unique
-  username  String
+  username  String    @unique  // 로그인용 아이디 (PK 역할)
   password  String
+  nickname  String              // 댓글 작성 시 노출되는 닉네임
+  email     String?             // 선택적 이메일 정보
   comments  Comment[]
   ratings   Rating[]
   createdAt DateTime  @default(now())
@@ -34,6 +36,9 @@ model Movie {
 model Comment {
   id        Int       @id @default(autoincrement())
   content   String
+  rating    Float?    // 별점 (0.0 ~ 5.0), 대댓글은 null
+  likes     Int       @default(0)  // 좋아요 수
+  dislikes  Int       @default(0)  // 싫어요 수
   userId    Int
   movieId   Int
   parentId  Int?      // For nested replies (null = root comment)
