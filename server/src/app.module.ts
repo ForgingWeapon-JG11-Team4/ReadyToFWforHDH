@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { CommentsModule } from './comments/comments.module';
 
 /**
  * @Module: 클래스를 모듈로 정의하는 데코레이터입니다.
@@ -16,6 +19,9 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true, // 전역으로 설정하여 어디서든 ConfigService를 쓸 수 있게 함
     }),
+    PrismaModule,
+    AuthModule,
+    CommentsModule,
     MoviesModule,
   ],
   // controllers: 이 모듈에서 정의된, 인스턴스화되어야 하는 컨트롤러 목록입니다.

@@ -8,29 +8,154 @@
 }
 
 .header-content {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
+/* 좌측: 로고 */
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e50914;
-    /* Netflix Red-ish */
     text-decoration: none;
+    white-space: nowrap;
 }
 
-.app-header nav a {
+.logo:hover {
+    opacity: 0.9;
+}
+
+/* 중앙: 검색창 */
+.search-box {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.search-input:focus {
+    background-color: #444;
+}
+
+.search-btn {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    background-color: #e50914;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+    background-color: #f40612;
+}
+
+/* 우측: 네비게이션 */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link {
     color: #fff;
     text-decoration: none;
-    margin-left: 20px;
     font-weight: 500;
-    transition: color 0.2s;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
-.app-header nav a:hover {
+.nav-link:hover {
     color: #e50914;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* User nickname display */
+.user-nickname {
+    color: #ccc;
+    font-weight: 500;
+    padding: 0.5rem;
+}
+
+/* Login 버튼 */
+.btn-login {
+    background-color: #e50914;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.btn-login:hover {
+    background-color: #f40612;
+}
+
+/* Logout 버튼 */
+.btn-logout {
+    background-color: transparent;
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #fff;
+    color: #1a1a1a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .search-box {
+        order: 3;
+        width: 100%;
+        max-width: none;
+    }
+
+    .nav-links {
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-login {
+        padding: 0.5rem 1rem;
+    }
 }
