@@ -65,3 +65,12 @@
     - `src/app.controller.spec.ts`: 유닛 테스트용 파일.
     - `test/`: E2E(End-to-End) 테스트용 폴더.
 - **관리 제외**: `.gitignore`에 `node_modules` 등을 추가하여 버전 관리에서 제외.
+
+### 1-2. 클라이언트 프로젝트 초기화 (Client Initialization)
+- **작업 내용**: Vite를 사용하여 React + TypeScript 기반의 `client` 프로젝트를 생성하고, 불필요한 초기 파일을 정리했습니다.
+- **주요 파일 설명**:
+    1.  **`vite.config.ts`**: Vite 빌드 도구 설정 파일입니다.
+    2.  **`src/main.tsx`**: React 애플리케이션의 진입점입니다. `index.html`의 root 요소에 React 앱을 마운트합니다.
+    3.  **`src/App.tsx`**: 메인 컴포넌트입니다. 현재는 초기화 메시지만 출력하도록 단순화되었습니다.
+- **파일 정리**: 사용하지 않는 기본 로고(`react.svg`)와 기본 스타일(`App.css`)을 초기화하여 백지상태에서 시작할 수 있도록 준비했습니다.
+
